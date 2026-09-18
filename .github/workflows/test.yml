@@ -1,0 +1,28 @@
+name: Test cask
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v5
+      - name: Register checkout as tap
+        run: |
+          mkdir -p "$(brew --repository)/Library/Taps/kimdwkimdw"
+          ln -s "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/kimdwkimdw/homebrew-tap"
+      - run: brew style --cask kimdwkimdw/tap/lenslet
+      - run: brew audit --cask kimdwkimdw/tap/lenslet
+      - run: brew install --cask kimdwkimdw/tap/lenslet
+      - name: Verify app bundle
+        run: |
+          test -x /Applications/Lenslet.app/Contents/MacOS/Lenslet
+          codesign --verify --deep --strict /Applications/Lenslet.app
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/Lenslet.app/Contents/Info.plist)" = com.arthurk.lenslet
+      - run: brew uninstall --cask lenslet
