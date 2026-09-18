@@ -6,6 +6,7 @@ Homebrew packages maintained by [kimdwkimdw](https://github.com/kimdwkimdw).
 
 ```sh
 brew tap kimdwkimdw/tap
+brew trust --cask kimdwkimdw/tap/lenslet
 brew install lenslet
 open /Applications/Lenslet.app
 ```
