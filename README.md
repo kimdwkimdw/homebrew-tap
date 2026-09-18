@@ -2,6 +2,25 @@
 
 Homebrew packages maintained by [kimdwkimdw](https://github.com/kimdwkimdw).
 
+## Install Meownitor
+
+```sh
+brew install --cask kimdwkimdw/tap/meownitor
+open /Applications/Meownitor.app
+```
+
+Universal app for Apple Silicon and Intel, macOS 13 or later.
+The current version is `0.3.0-alpha.2`. It is ad-hoc signed and not notarized.
+Input Monitoring is optional; enable it in System Settings to detect external keyboards.
+
+```sh
+brew upgrade --cask meownitor
+brew uninstall --cask meownitor
+```
+
+For an identical manually installed app, use `brew install --cask --adopt kimdwkimdw/tap/meownitor`.
+Uninstall preserves settings and downloaded cats; `--zap` removes preferences only.
+
 ## Install Lenslet
 
 ```sh
@@ -33,3 +52,5 @@ Uninstall preserves photos in `~/Pictures/Lenslet`. `--zap` removes UI preferenc
    `brew audit --cask kimdwkimdw/tap/lenslet`, then commit and push.
 
 CI checks the cask, downloads the release with checksum verification, and tests installation and removal.
+
+For Meownitor, update `version` and `sha256` in `Casks/meownitor.rb` from the versioned upstream universal ZIP. Run the same style/audit checks with `kimdwkimdw/tap/meownitor`; CI tests both casks independently.

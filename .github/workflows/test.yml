@@ -11,19 +11,26 @@ permissions:
 jobs:
   test:
     runs-on: macos-15
+    strategy:
+      matrix:
+        include:
+          - cask: lenslet
+            app: Lenslet
+          - cask: meownitor
+            app: Meownitor
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Register checkout as tap
         run: |
           mkdir -p "$(brew --repository)/Library/Taps/kimdwkimdw"
           ln -s "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/kimdwkimdw/homebrew-tap"
-          brew trust --cask kimdwkimdw/tap/lenslet
-      - run: brew style --cask kimdwkimdw/tap/lenslet
-      - run: brew audit --cask kimdwkimdw/tap/lenslet
-      - run: brew install --cask kimdwkimdw/tap/lenslet
+          brew trust --cask kimdwkimdw/tap/${{ matrix.cask }}
+      - run: brew style --cask kimdwkimdw/tap/${{ matrix.cask }}
+      - run: brew audit --cask kimdwkimdw/tap/${{ matrix.cask }}
+      - run: brew install --cask kimdwkimdw/tap/${{ matrix.cask }}
       - name: Verify app bundle
         run: |
-          test -x /Applications/Lenslet.app/Contents/MacOS/Lenslet
-          codesign --verify --deep --strict /Applications/Lenslet.app
-          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/Lenslet.app/Contents/Info.plist)" = com.arthurk.lenslet
-      - run: brew uninstall --cask lenslet
+          test -x /Applications/${{ matrix.app }}.app/Contents/MacOS/${{ matrix.app }}
+          codesign --verify --deep --strict /Applications/${{ matrix.app }}.app
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' /Applications/${{ matrix.app }}.app/Contents/Info.plist)" = com.arthurk.${{ matrix.cask }}
+      - run: brew uninstall --cask ${{ matrix.cask }}
