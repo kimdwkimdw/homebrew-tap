@@ -10,7 +10,7 @@ open /Applications/Meownitor.app
 ```
 
 Universal app for Apple Silicon and Intel, macOS 13 or later.
-The current version is `0.3.0-alpha.2`. It is ad-hoc signed and not notarized.
+The current version is `0.3.0-alpha.3`. It is ad-hoc signed and not notarized.
 Input Monitoring is optional; enable it in System Settings to detect external keyboards.
 
 ```sh

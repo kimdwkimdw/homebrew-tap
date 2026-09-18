@@ -1,6 +1,6 @@
 cask "meownitor" do
-  version "0.3.0-alpha.2"
-  sha256 "a3cbfcea31d1f40056767533f0ed075b7d8c98dfec2c9dcf6eccc8aee1c6ad4d"
+  version "0.3.0-alpha.3"
+  sha256 "d6272b2a3b5416d4968861de2e985f6680a4d6cce4c74aabfcd8ad0955c308e9"
 
   url "https://github.com/kimdwkimdw/meownitor/releases/download/v#{version}/Meownitor-macOS-universal.zip"
   name "Meownitor"
